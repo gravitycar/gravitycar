@@ -1,0 +1,479 @@
+html
+{
+   background-image: url(../../images/tap/skull_background_left.gif);
+   background-repeat: no-repeat;
+   background-color: #202020;
+   padding: 0px;
+   margin: 0px;
+}
+
+body
+{
+   color: #FFF;
+   background-color: #FFF;
+   font-family: verdana, helvetica, sans-serif;
+   font-size: 13px;
+   padding: 0px;
+   margin: 0px 0px 0px 50px;
+   background-image: url(../../images/tap/skull_background_right.gif);
+   background-repeat: no-repeat;
+   background-position: right 0px;
+   background-color: transparent;
+   min-height: 750px;
+}
+
+body a
+{
+   color: #8A7D61;
+   text-decoration: none;
+   font-weight: bold;
+}
+
+body a:hover
+{
+   color: #FFF;
+   text-decoration: underline;
+   font-weight: bold;
+}
+
+body a:active
+{
+   color: #8A7D61;
+   text-decoration: none;
+   font-weight: bold;
+}
+
+.loginDiv
+{
+   font-weight: bold; 
+   font-size: 9px; 
+   text-align: right;
+   padding: 3px;
+   border: 0px solid blue;
+   position: absolute;
+   top: 10px;
+   right: 100px;
+}
+
+.editLink
+{
+   background-color: transparent;
+   color: #8A7D61;
+   font-size: 10px;
+   margin: 0px 5px 0px 5px;
+   padding: 3px;
+}
+
+.editLink:hover
+{
+   background-color: #8A7D61;
+   color: #FFF;
+}
+
+#pageTitle
+{
+   color: #8A7D61;
+   margin: 0px 75px 10px 0px;
+   text-align: center;
+   font-size: 22px;
+   font-weight: bold;
+}
+
+.subTitle
+{
+   text-align: center;
+   margin: 6px auto;
+}
+
+h2
+{
+   margin: 0px;
+   font-size: 18px;
+   font-weight: bold;
+}
+
+h3
+{
+   margin: 0px;
+   font-size: 14px;
+   font-weight: bold;
+}
+
+.instructions
+{
+   background-color: #4D4D4D;
+   border: 1px solid black;
+   padding: 5px 10px;
+   margin: 10px 20%;
+}
+
+.errorMsgsDiv
+{
+   border: 0px solid black;
+   padding: 4px;
+}
+
+.errorMsgsDiv .title
+{
+   width: 400px;
+   border: 2px solid red;
+   margin: 0px;
+   padding: 2px;
+   font-size: 15px;
+   font-weight: bold;
+   background-color: red;
+   color: white;
+   text-align: center;
+}
+
+.errorMsgsDiv ul
+{
+   width: 400px;
+   padding: 2px;
+   margin: 0px;
+   list-style-type: none;
+   border: 2px solid red;
+   font-size: 12px;
+   background-color:  #4D4D4D;
+}
+
+.errorMsgsDiv ul li
+{
+   padding: 3px;
+   margin: 0px 0px 0px 5px;
+   text-align: left;
+}
+
+.debugMsgsDiv
+{
+   border: 0px solid black;
+   padding: 4px;
+}
+
+.debugMsgsDiv .title
+{
+   width: 400px;
+   border: 2px solid #F90;
+   margin: 0px;
+   padding: 2px;
+   font-size: 15px;
+   font-weight: bold;
+   background-color: #F90;
+   color: white;
+   text-align: center;
+}
+
+.debugMsgsDiv ul
+{
+   width: 400px;
+   padding: 2px;
+   margin: 0px;
+   list-style-type: none;
+   border: 2px solid #F90;
+   font-size: 12px;
+   background-color: #EEE;
+}
+
+.debugMsgsDiv ul li
+{
+   padding: 3px;
+   margin: 0px 0px 0px 5px;
+   text-align: left;
+}
+
+.alertMsgsDiv
+{
+   padding: 4px;
+}
+
+.alertMsgsDiv .title
+{
+   width: 400px;
+   border: 2px solid #DA9113;
+   margin: 0px;
+   padding: 2px;
+   font-size: 15px;
+   font-weight: bold;
+   background-color: #DA9113;
+   color: white;
+   text-align: center;
+}
+
+.alertMsgsDiv ul
+{
+   width: 400px;
+   padding: 2px;
+   margin: 0px;
+   list-style-type: none;
+   border: 2px solid #DA9113;
+   font-size: 12px;
+   background-color: #4D4D4D;
+}
+
+.alertMsgsDiv ul li
+{
+   padding: 3px;
+   margin: 0px 0px 0px 5px;
+   text-align: left;
+}
+
+table.formTable
+{
+   border: 4px ridge #DA9113;
+   margin: 3px auto 3px auto;
+   background-color: #4D4D4D;
+}
+
+table.formTable tr th
+{
+   color: white;
+   background-color: black;
+   font-weight: bold;
+   font-size: 12px;
+   padding: 3px;
+}
+
+table.formTable tr td
+{
+   padding: 3px;
+   background-color: #4D4D4D;
+}
+
+.formLabel
+{
+   text-align: right;
+   font-weight: bold;
+   font-size: 11px;
+}
+
+.formErrorLabel
+{
+   text-align: right;
+   font-weight: bold;
+   font-size: 11px;
+   color: red;
+}
+
+.requiredField
+{
+   font-weight: bold;
+   color: red;
+}
+
+.footer
+{
+   padding-top: 25px;
+   padding-bottom: 5px;
+   margin-right: 75px;
+   text-align: center;
+   font-size: 9px;
+   clear: both;
+}
+
+.footer .left
+{
+   float: left;
+   text-align: left;
+   margin-left: 20px;
+}
+
+.footer .right
+{
+   float: right;
+   text-align: right;
+}
+
+.footer .middle
+{
+   text-align: center;
+}
+
+table.tabularData
+{
+   border: 0px solid #DA9113;
+   margin-right: 75px;
+   padding-right: 75px;
+   padding-left: 15px;
+}
+
+table.tabularData tr.dark
+{
+   color: white;
+   background-color: #4D4D4D;
+}
+
+table.tabularData tr.light
+{
+   color: black;
+   background-color: white;
+}
+
+table.tabularData tr.light td a:hover
+{
+   background-color: #8A7D61;
+}
+
+
+table.tabularData tr th
+{
+   text-align: left;
+   padding: 4px;
+   border-style: solid;
+   border-color: black;
+   border-width: 0px 0px 1px 0px;
+   background-color: black;
+   color: white;
+}
+
+table.tabularData tr td
+{
+   padding: 4px;
+}
+
+.blogEntry
+{
+   clear: both;
+   width: 80%;
+   margin: 10px auto 20px auto;
+   border: 4px ridge #DA9113;
+}
+
+.blogEntry h3
+{
+   background-color: #4D4D4D;
+   padding: 2px 10px;
+}
+
+.blogEntry .blogEntryDate
+{
+   font-style: italic;
+   border-bottom: 1px solid #DA9113;
+   margin-bottom: 8px;
+   padding: 2px 10px;
+}
+
+.blogEntry .blogEntryText
+{
+   padding: 2px 10px;
+}
+
+.blogEntry div.commentLinkContainer
+{
+   padding: 10px 10px 2px 10px;
+}
+
+#nextPrevLinks
+{
+   clear: both;
+   width: 80%;
+   margin: 10px auto 20px auto;
+   height: 2ex;
+}
+
+#prevLink
+{
+   float: left;
+}
+
+#nextLink
+{
+   text-align: right;
+}
+
+#allCommentsContainer
+{
+   clear: both;
+   width: 80%;
+   margin: 10px auto 20px auto;
+   border: 0px solid blue;
+}
+
+#allCommentsContainer .commentText
+{
+   margin: 15px 0px;
+   font-size: 12px;
+   border: 1px solid #DA9113;
+   padding: 4px;
+}
+
+#allCommentsContainer .commentText .commentWriter
+{
+   font-style: italic;
+   margin-bottom: 10px;
+}
+
+#allCommentsContainer table.formTable
+{
+   margin-left: auto;
+   margin-right: auto;
+}
+
+.articleText
+{
+   text-align: justify;
+   margin-left: 15px;
+   margin-right: 75px;
+}
+
+.articleText li
+{
+   margin-bottom: 15px;
+}
+
+.articleText .imgLeft
+{
+   float: left;
+   margin: 0px 10px 10px 0px;
+   border: 2px solid black;
+}
+
+.articleText .imgRight
+{
+   float: right;
+   margin: 0px 0px 10px 10px;
+   border: 2px solid black;
+}
+
+.listContainer
+{
+   border: 4px ridge #DA9113;
+   margin: 0px auto;
+   width: 75%;
+}
+
+a.listItemLinkLight, a.listItemLinkDark
+{
+   display: block;
+   border: 0px solid black;
+   border-width: 0px 1px 1px 0px;
+   color: black;
+   text-decoration: none;
+   padding: 4px 4px;
+   background-color: #FFF;
+   overflow: hidden;
+}
+
+a.listItemLinkDark
+{
+   color: #FFF;
+   background-color: #4D4d4d;
+}
+
+a.listItemLinkLight:hover, a.listItemLinkDark:hover
+{
+   text-decoration: none;
+   color: black;
+   background-color: #DA9113;
+}
+
+a.listItemLinkLight div.listTitleField, a.listItemLinkDark div.listTitleField
+{
+}
+
+a.listItemLinkLight div.listField, a.listItemLinkDark div.listField
+{
+   float: right;
+   border: 0px solid red;
+   overflow: hidden;
+   padding-left: 10px;
+}

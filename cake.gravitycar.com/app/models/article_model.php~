@@ -1,0 +1,8 @@
+<?php
+
+class HomeModel extends AppModel
+{
+   var $name = "Home";
+}
+
+?>

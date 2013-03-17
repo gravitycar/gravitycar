@@ -1,0 +1,87 @@
+<?php
+/**
+gcDropoff - a class for allowing folks to upload jpg and zip files to
+my webserver.
+**/
+
+//error_reporting(E_ALL);
+//ini_set("display_errors", 1); 
+require_once("lib/classes/Form.inc");
+
+
+class gcDropoff extends gcForm implements Application
+{
+   protected $files;
+   
+   function gcDropoff()
+   {
+      $this->init();
+      $this->page->addJavascriptFile("js/jquery.js");
+      $this->setFormProps("from", "uploadedFiles");
+      $this->acceptUploads = true;
+      $this->setFormTitle("Upload Files");
+      
+      $this->setInputAttr("from", "type", "text");
+      $this->setInputAttr("from", "size", "30");
+      
+      $this->setInputAttr("uploadedFiles", "type", "file");
+      $this->setInputAttr("uploadedFiles", "type", "file");
+      $this->setInputAttr("uploadedFiles", "size", "50");
+      
+      $this->setInputAttr("submitButton", "type", "submit");
+      $this->setInputAttr("submitButton", "value", "Upload");
+      $this->setControlButtons("submitButton");
+      $this->setValidationRule("uploadedFiles", "notEmpty");
+   }
+   
+   function run()
+   {
+      $this->files = $_FILES;
+      
+      $uploadDir = $_SERVER['DOCUMENT_ROOT'] . "/dropbox/";
+      foreach ($_FILES as $file)
+      {
+         if ($file['size'] == 0)
+         {
+            continue;
+         }
+         
+         $fileInfoHandle = finfo_open();
+         $info = finfo_file($fileInfoHandle, $file['tmp_name']);
+         finfo_close($fileInfoHandle);
+         $uploadFile = $uploadDir . $file['name'];
+         $this->msgCenter->addAlert($file['name'] . " was received. It is a " . $info . ". Let's put it in $uploadFile");
+         if (stripos($info, "JPEG") !== false || 
+             stripos($info, "JPG") !== false || 
+             stripos($info, "PNG") !== false || 
+             stripos($info, "GIF") !== false ||
+             stripos($info, "ZIP") !== false ||
+             stripos($info, "TAR") !== false )
+         {
+            if (move_uploaded_file($file['tmp_name'], $uploadFile)) 
+            {
+               $this->msgCenter->addAlert($file['name'] . " looks good, and was successfully uploaded.");
+            }
+            else 
+            {
+               $this->msgCenter->addError($file['name'] . " That's not neighborly of you! " . $file['tmp_name'] . " " . $file['error']);
+            }
+         }
+         else
+         {
+            $this->msgCenter->addError($file['name'] . " is not a valid file type. I only want pictures, zips or tar balls.");
+            continue;
+         }
+      }
+      
+      return true;
+   }
+   
+   function render()
+   {
+      $this->msgCenter->addAlert("rendering dropoff.");
+      $this->htmlObjects[] = $this->buildForm();
+      return $this->htmlObjects;
+   }
+}
+?>

@@ -1,0 +1,77 @@
+fieldset.comboselect
+{
+   width: 600px;
+   border: 0px solid blue;
+   padding: 2px;
+   overflow: hidden;
+}
+
+fieldset.comboselect select
+{
+   width: 100%;
+   height: 100px;
+   padding: 0px;
+   margin: 0px;
+   border: 0px solid black;
+}
+
+fieldset.comboselect div span.label
+{
+   color: #FFD619;;
+   background-color: #068709;
+   font: bold 12px/14px verdana, arial, sans-serif;
+}
+
+fieldset.comboselect select#usersList_left
+{
+   background-color: #DBDFFF;
+}
+
+fieldset.comboselect select#usersList_right
+{
+   background-color: #DBDFFF;
+}
+
+fieldset.comboselect fieldset
+{
+   float: left;
+   width: 19%;
+   margin: 0px;
+   padding: 0px;
+   border: 0px solid black;
+}
+
+fieldset.comboselect fieldset input
+{
+   display: block;
+   margin: 10px auto 30px auto;
+   width: 75px;
+}
+
+fieldset.comboselect div#leftDiv
+{
+   text-align: center;
+   float: left;
+   width: 40%;
+   border: 1px solid black;
+   background-color: #068709;
+}
+
+fieldset.comboselect div#rightDiv
+{
+   text-align: center;
+   width: 40%;
+   border: 1px solid black;
+   float: right;
+   background-color: #068709;
+}
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,611 @@
+<?php
+/**
+
+Page.inc (class for web pages)
+
+The page object is where we aggregate all the content to be displayed to 
+the user. JS and CSS files as well as applications all get collected here and
+then eventually rendered.
+
+**/
+
+require_once("lib/classes/MessageCenter.inc");
+require_once("lib/classes/HTMLRenderer.inc");
+require_once("lib/classes/Application.inc");
+require_once("lib/classes/Authenticator.inc");
+session_start();
+class gcPage
+{
+   private static $instance;
+   var $jsFiles;
+   var $cssFiles;
+   var $applications;
+   var $msgCenter = false;
+   var $auth = null;
+   var $cssPath = "css/default/";
+   
+   function gcPage()
+   {
+      $this->jsFiles = array();
+      $this->cssFiles = array();
+      $this->applications = array();
+      $this->msgCenter =& gcMessageCenter::Singleton();
+      $this->renderer =& gcHTMLRenderer::Singleton();
+      $this->auth =& gcAuthenticator::Singleton();
+      $this->head = $this->renderer->head;
+      $this->body = $this->renderer->body;
+      $this->determineCSSPath();
+   }
+   
+   
+   /**
+   :Function: Singleton
+   
+   :Description:
+   Returns a reference to the same instance of this class whenver it's called.
+   If no instance of this class has been created yet, an instance is created
+   and then stored in a global variable.
+   
+   :Parameters:
+   None
+   
+   :Return Value:
+   gcPage - the instance of the page object.
+   
+   :Notes:
+   **/
+   public static function &Singleton()
+   {
+      if (!IsSet(self::$instance))
+      {
+         $c = __CLASS__;
+         self::$instance = new $c;
+      }
+      return self::$instance;
+   }
+   
+   
+   /**
+   :Function: loadAppliation()
+   
+   :Description:
+   Stores a reference to an application object.
+   
+   :Parameters:
+   mixed $application - an instance of an object that extends the application
+   class.
+   
+   :Return Value:
+   None.
+   
+   :Notes:
+   **/
+   function loadApplication($application)
+   {
+      $appliationFilePath = "lib/apps/$application" . ".php";
+      if (file_exists($appliationFilePath))
+      {
+         include_once($appliationFilePath);
+         $this->applications[$application] = new $application;
+         $this->applications[$application]->determineRequiredPermission();
+      }
+      else
+      {
+         $this->msgCenter->addError("Could not include $application: class file not found.");
+      }
+   }
+   
+   
+   /**
+   :Function: clearAllAppliations()
+   
+   :Description:
+   Deletes all entries in the $this->applications array by replacing it with a
+   new array.
+   
+   :Parameters:
+   None.
+   
+   :Return Value:
+   None.
+   
+   :Notes:
+   **/
+   function clearAllAppliations()
+   {
+      $this->applications = array();
+   }
+   
+   
+   /**
+   :Function: removeApplications()
+   
+   :Description:
+   Deletes one or more applications from the $this->applications list by 
+   looping through the list and deleting the applications that match the passed
+   in args. You can pass in any number of args, but they must all be stirngs.
+   
+   :Parameters:
+   string - $applicationName 
+   [string - $applicationName2] . . .
+   
+   :Return Value:
+   None.
+   
+   :Notes:
+   You must call this method before any application is rendered.
+   **/
+   function removeApplications()
+   {
+      $appsToDelete = func_get_args();
+      
+      foreach ($appsToDelete as $appName)
+      {
+         unset($this->applications[$appName]);
+      }
+   }
+   
+   
+   /**
+   :Function: hasPerm()
+   
+   :Description:
+   Checks to see if the user's permission weight is enough to use all of the
+   applications loaded into this page. Returns true if the auth'd in user's
+   weight is high enough, false if the user is not logged in or doesn't have
+   a high enough weight.
+   
+   If you try to use a page that requires some permission weight before you
+   are logged in, you'll be presented with a log in form and shown an error
+   message telling you that you need to log in.
+   
+   :Parameters:
+   None.
+   
+   :Return Value:
+   boolean - true if you have permission to use all the applications on this
+      page, false otherwise.
+   
+   :Notes:
+   **/
+   function hasPerm()
+   {
+      if (!$this->auth->checkAuth())
+      {
+         if (!$this->auth->getAuthOK())
+         {
+            return $this->auth->runLogin();
+         }
+         else
+         {
+            return false;
+         }
+      }
+      
+      return true;
+   }
+   
+   
+   /**
+   :Function: runApplication()
+   
+   :Description:
+   Calls the run() method of the passed in application. All applications must
+   have a run() method.
+   
+   :Parameters:
+   string $appName - the name of the application you want to run.
+   
+   :Return Value:
+   boolean - true if the application is run, false if it's not run.
+   
+   :Notes:
+   **/
+   function runApplication($appName)
+   {
+      $app =& $this->applications[$appName];
+      if ($this->hasPerm())
+      {
+         if (method_exists($app, "run"))
+         {
+            $app->run();
+            return true;
+         }
+         else
+         {
+            $type = gettype($app);
+            $this->msgCenter->addDebug("$appName is a $type and has no run() method. Did you load it?");
+            return false;
+         }
+      }
+      return false;
+   }
+   
+   
+   /**
+   :Function: runApplications()
+   
+   :Description:
+   Loops through the list of applications for this page and runs each one.
+   
+   :Parameters:
+   
+   :Return Value:
+   None.
+   
+   :Notes:
+   **/
+   function runApplications()
+   {
+      foreach ($this->applications as $appName=>$app)
+      {
+         if (!$this->runApplication($appName))
+         {
+            break;
+         }
+      }
+   }
+   
+   
+   /**
+   :Function: renderApplication()
+   
+   :Description:
+   Calls the "render" method of an application object. All applications must
+   have a render() method. This method will skip any objects that don't have
+   the render() method or are not actually objects.
+   
+   :Parameters:
+   mixed $application - an instance of an object that extends the applications
+      class, or the name of the class as a string (assuming the application has
+      already been loaded).
+   
+   :Return Value:
+   None.
+   
+   :Notes:
+   **/
+   function renderApplication($application)
+   {
+      if (!is_object($application))
+      {
+         if (!IsSet($this->applications[$application]))
+         {
+            $this->msgCenter->addError("The application $application cannot be rendered because it does not seem to be loaded.");
+            return false;
+         }
+         else
+         {
+            $application =& $this->applications[$application];
+         }
+      }
+      
+      if (!method_exists($application, "render"))
+      {
+         $applicationName = get_class($application);
+         $this->msgCenter->addDebug("The application $applicationName cannot be rendered because it has no \"render\" method.");
+         return false;
+      }
+      
+      if ($application->parent)
+      {
+         if (method_exists($application->parent, "addContents"))
+         {
+            $parent =& $application->parent;
+         }
+      }
+      else
+      {
+         $parent =& $this->body;
+      }
+      
+      $htmlObjects = $application->render();
+      
+      if (!is_array($htmlObjects))
+      {
+         $htmlObjects = array($htmlObjects);
+      }
+      
+      foreach($htmlObjects as $htmlObject)
+      {
+         if (is_subclass_of($htmlObject, "gcTag"))
+         {
+            $parent->addContents($htmlObject);
+         }
+      }
+   }
+   
+   
+   /**
+   :Function: renderApplications()
+   
+   :Description:
+   Just loops through all loaded applications and tries to render each one in
+   the order they were loaded in.
+   
+   :Parameters:
+   None
+   
+   :Return Value:
+   None.
+   
+   :Notes:
+   NOTHING should be printed to the browser before this function is called!
+   **/
+   function renderApplications()
+   {
+      //print("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3c.org/TR/html4/strict.dtd\">\n");
+      print("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+      print("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\"	\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n");
+      foreach ($this->applications as $applicationName => $applicationObj)
+      {
+         $this->renderApplication($applicationObj);
+      }
+      $this->renderer->render();
+   }
+   
+   
+   /**
+   :Function: setTitle()
+   
+   :Description:
+   Sets the text for the title bar at the top of the browser window for this 
+   page. This value also becomes the default value for the page title.
+   
+   :Parameters:
+   string $title - The title of this page, to be displaed in the title bar 
+   and possibly other places.
+   
+   :Return Value:
+   None.
+   
+   :Notes:
+   **/
+   function setTitle($title)
+   {
+      $this->pageTitle = $title;
+      $this->renderer->title->setContents($title);
+   }
+   
+   
+   /**
+   :Function: setTitle()
+   
+   :Description:
+   Sets the title of this page, which is displayed above all other page
+   content. DOES NOT over-write the title bar value.
+   
+   :Parameters:
+   string $title - The title of this page, to be displaed at the top of the
+      page, above all other content.
+   
+   :Return Value:
+   None.
+   
+   :Notes:
+   **/
+   function setPageTitle($title)
+   {
+      $this->pageTitle = $title;
+      $pageTitleTag = $this->renderer->getTagById("pageTitle");
+      if ($pageTitleTag)
+      {
+         $pageTitleTag->setContents($title);
+      }
+      else
+      {
+         $this->msgCenter->addError("could not find pageTitle tag");
+      }
+   }
+   
+   
+   /**
+   :Function: determineCSSPath()
+   
+   :Description:
+   Sets the path to the css directory for the entire web site. This function
+   will check in the following places for a css directory path:
+   1) Query String
+   2) Session Variable
+   3) Cookie
+   4) Default value
+   
+   The default value is "default", which is a symbolic link in the css directory
+   and it points to whatever directory should be the default css directory for
+   people coming to the site with no css directory already selected.
+   
+   :Parameters:
+   string $cssPath - the path to the css directory you want to use.
+   
+   :Return Value:
+   None.
+   
+   :Notes:
+   **/
+   function determineCSSPath($cssPath = "")
+   {
+      $defaultCssPath = "default";
+      if ($cssPath == "")
+      {
+         $cssPath = $defaultCssPath;
+         
+         if (IsSet($_GET['cssPath']))
+         {
+            $cssPath = $_GET['cssPath'];
+         }
+         else if (IsSet($_SESSION['cssPath']))
+         {
+            $cssPath = $_SESSION['cssPath'];
+         }
+         else if (IsSet($_COOKIE['cssPath']))
+         {
+            $cssPath = $_COOKIE['cssPath'];
+         }
+      }
+      
+      $_SESSION['cssPath'] = $cssPath;
+      setcookie('cssPath', $cssPath, mktime(time() + (60 * 60 * 24 * 7)));
+      
+      $this->cssPath = "css/" . $cssPath . "/";
+   }
+   
+   /**
+   :Function: addStyleSheet()
+   
+   :Description:
+   Adds a css stylesheet to the page.
+   
+   :Parameters:
+   string $fileName - the path to the css file you want to include.
+   
+   :Return Value:
+   None.
+   
+   :Notes:
+   **/
+   function addStyleSheet($fileName)
+   {
+      if (!in_array($fileName, $this->cssFiles))
+      {
+         $filePath = $this->cssPath . $fileName;
+         if (file_exists($filePath))
+         {
+            $this->cssFiles[] = $filePath;
+            $this->renderer->head->addStylesheet($filePath);
+         }
+         else
+         {
+            $this->msgCenter->addDebug("Could not add css file $filePath. Not found. Trying default.");
+            $cssDefaultPath = "css/default/";
+            $defaultFilePath = $cssDefaultPath . $fileName;
+            if (file_exists($defaultFilePath))
+            {
+               $this->cssFiles[] = $defaultFilePath;
+               $this->renderer->head->addStylesheet($defaultFilePath);
+            }
+            else
+            {
+               $this->msgCenter->addDebug("Could not add css file $filePath. Not found.");
+            }
+         }
+      }
+   }
+   
+   
+   /**
+   :Function: setStyleSheets()
+   
+   :Description:
+   Removes all previously loaded style sheet files and resets the array of 
+   style sheet files for this page to whatever array you pass in.
+   
+   :Parameters:
+   array $files - an array of 0 or more style sheet file paths.
+   
+   :Return Value:
+   None.
+   
+   :Notes:
+   NOTE: This does delete any previous style sheet files, so make sure you're
+   replacing any files you do in fact need.
+   **/
+   function setStyleSheets($files)
+   {
+      if (!is_array($files))
+      {
+         $files = array($files);
+      }
+      
+      $this->cssFiles = array();
+      $this->renderer->head->removeAllStylesheets();
+      
+      foreach ($files as $filePath)
+      {
+         $this->addStyleSheet($filePath);
+      }
+   }
+   
+   
+   /**
+   :Function: addJavascriptFile()
+   
+   :Description:
+   Adds a javascript file to the page.
+   
+   :Parameters:
+   string $filePath - the path to the js file you want to include.
+   
+   :Return Value:
+   None.
+   
+   :Notes:
+   **/
+   function addJavascriptFile($filePath)
+   {
+      if (!in_array($filePath, $this->jsFiles))
+      {
+         if (file_exists($filePath))
+         {
+            $this->jsFiles[] = $filePath;
+            $this->renderer->head->addJavascriptFile($filePath);
+            //$this->renderer->body->addJavascriptFile($filePath);
+         }
+         else
+         {
+            $this->msgCenter->addDebug("Could not add javascript library $filePath. Not found.");
+         }
+      }
+   }
+   
+   
+   /**
+   :Function: setJavascriptFiles()
+   
+   :Description:
+   Removes all previously loaded javascript files and resets the array of 
+   javascript files for this page to whatever array you pass in.
+   
+   :Parameters:
+   array $files - an array of 0 or more javascript file paths.
+   
+   :Return Value:
+   None.
+   
+   :Notes:
+   NOTE: This does delete any previous javascript files, so make sure you're
+   replacing any files you do in fact need.
+   **/
+   function setJavascriptFiles($files)
+   {
+      if (!is_array($files))
+      {
+         $files = array($files);
+      }
+      $this->jsFiles = array();
+      $this->renderer->head->removeAllJavascriptFiles();
+      
+      foreach ($files as $filePath)
+      {
+         $this->addJavascriptFile($filePath);
+      }
+   }
+}
+
+
+
+   
+   /**
+   :Function: 
+   
+   :Description:
+   None.
+   
+   :Parameters:
+   None
+   
+   :Return Value:
+   None.
+   
+   :Notes:
+   **/
+?>

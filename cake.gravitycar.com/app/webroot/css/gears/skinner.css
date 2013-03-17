@@ -1,0 +1,50 @@
+#skinBackground
+{
+   background-image: url(../../images/gears/skinner_background.gif);
+   background-repeat: repeat-x;
+   background-position: left 20px;
+   height: 113px;
+   background-color: white;
+   padding: 20px 0px;
+}
+
+#skinsContainer
+{
+   padding: 0px;
+   height: 113px;
+   margin: 0px auto 10px auto;
+   clear: both;
+   text-align: center;
+   width: 800px;
+   border: 0px solid red;
+}
+
+.skinDiv
+{
+   float: left;
+   margin: 0px 20px;
+   padding: 0px;
+   height: 103px;
+   border: 2px solid #A4957E;
+}
+
+.skinLink
+{
+   font-size: 0px;
+   height: 0px;
+}
+
+#skinCount
+{
+   width: 105px;
+   color: #DFAB2E;
+   font-size: 88px;
+   font-weight: bold;
+   margin-right: 0px;
+   border: 0px solid #DFAB2E;
+   background-image: url(../../images/gears/latest.gif);
+   background-repeat: no-repeat;
+   background-position: right 5px;
+}
+
+

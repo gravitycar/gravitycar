@@ -1,0 +1,149 @@
+#navContainer
+{
+   background-image: url(../../images/tokyo/happy_boy.jpg);
+   background-repeat: no-repeat;
+   background-position: center 5px;
+   height: 225px;
+   background-color: transparent;
+   float: none;
+   margin: 0px auto;
+   padding: 0px;
+   border: 0px solid red;
+   width: 956px;
+}
+
+#navList
+{
+	padding: 0px;
+	margin: 0px auto;
+   padding-top: 200px;
+	list-style: none;
+   border: 0px solid black;
+   font-size: 13px;
+   width: 956px;
+}
+
+#navList:after
+{
+   content: ".";
+   display: block;
+   clear: both;
+   font-size: 0px;
+   padding: 0px;
+   margin: 0px;
+}
+
+#navList a
+{
+   font-family: verdana, sans-serif;
+   border-width: 0px;
+}
+
+#navList li.topMenuItem, #navList li.topMenuItemOver
+{
+	float: left;
+   border: 0px solid black;
+}
+
+#navList li#navhomeItem
+{
+   margin-left: 10px;
+}
+
+#navList li#aboutItem
+{
+   margin-left: 10px;
+}
+
+#navList li#mqtItem
+{
+   margin-left: 10px;
+}
+
+#navList li#cogItem
+{
+   margin-left: 280px;
+}
+
+#navList li#giftsItem
+{
+   margin-left: 20px;
+}
+
+#navList li#usersItem
+{
+   margin-left: 30px;
+}
+
+#navList li.topMenuItem a.topMenuLink, #navList li.topMenuItemOver a.topMenuLink
+{
+   padding: 2px 10px;
+	display: block;
+   text-decoration: none;
+   text-transform: uppercase;
+}
+
+a.topMenuLink
+{
+   color: #FFF;
+   background-color: transparent;
+   font-weight: bold;
+}
+
+a.topMenuLink:hover
+{
+   color: #FFD619;
+}
+
+#navList li.topMenuItem ul.subMenu, #navList li.topMenuItemOver ul.subMenu
+{
+	position: absolute;
+	width: 175px;
+	top: -999em;
+   background-color: #DBDFFF;
+   border: 0px solid black;
+   padding: 0px;
+   margin: 0px;
+}
+
+#navList li#usersItem ul.subMenu
+{
+   width: 110px;
+}
+
+#navList li#giftsItem ul.subMenu
+{
+   width: 100px;
+}
+
+#navList li.topMenuItem:hover ul.subMenu, #navList li.topMenuItemOver ul.subMenu 
+{
+	top: auto;
+}
+
+ul.subMenu li.subMenuItem
+{
+   list-style-type: none;
+   padding: 0px;
+   margin: 0px;
+   white-space: nowrap;
+   width: 100%;
+   overflow: hidden;
+}
+
+ul.subMenu li.subMenuItem a
+{
+   padding: 2px 0px 2px 10px;
+   background-color: #1AB51E;
+   color: #FFF;
+   display: block;
+   width: 100%;
+   text-decoration: none;
+}
+
+ul.subMenu li.subMenuItem a:hover
+{
+   background-color: #DBDFFF;
+   color: #068709;
+}
+

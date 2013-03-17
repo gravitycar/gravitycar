@@ -1,0 +1,154 @@
+#calDiv
+{
+   width: 300px;
+   height: 350px;
+   float: left;
+   margin: 0px 10px;
+}
+
+#calDiv table#proposedDateCalendar_table
+{
+   width: 100%;
+   margin: 0px;
+   padding: 0px;
+   border: 0px solid black;
+   border-top-width: 1px;
+   border-left-width: 1px;
+}
+
+#calDiv table#proposedDateCalendar_table tr
+{
+   height: 40px;
+}
+
+#calDiv table#proposedDateCalendar_table tr td.navCell
+{
+   text-align: center;
+   border: 0px solid black;
+   font-size: 16px;
+   font-weight: bold;
+   padding: 0px;
+}
+
+#calDiv table#proposedDateCalendar_table tr td.navCell a
+{
+   outline: none;
+   display: block;
+   height: 40px;
+   font-size: 21px;
+   padding: 0px;
+   padding-top: 5px;
+   color: black;
+   background-color: white;
+}
+
+#calDiv table#proposedDateCalendar_table tr td.navCell a:hover
+{
+   text-decoration: none;
+   color: red;
+}
+
+#calDiv table#proposedDateCalendar_table tr td#monthCell
+{
+   border-bottom-width: 1px;
+}
+
+#calDiv table#proposedDateCalendar_table tr td#backCell
+{
+   border-bottom-width: 1px;
+}
+
+#calDiv table#proposedDateCalendar_table tr td#nextCell
+{
+   border-bottom-width: 1px;
+   border-right-width: 1px;
+}
+
+#calDiv table#proposedDateCalendar_table tr td.datePickerCell
+{
+   margin: 0px;
+   padding: 0px;
+   border: 0px solid black;
+   border-right-width: 1px;
+   border-bottom-width: 1px;
+   font-size: 14px;
+   border-collapse: collapse;
+}
+
+
+#calDiv table#proposedDateCalendar_table tr td.datePickerCell a
+{
+   display: block;
+   height: 40px;
+   color: black;
+   background-color: white;
+}
+
+#calDiv table#proposedDateCalendar_table tr td.datePickerCell a:hover
+{
+   text-decoration: none;
+   color: white;
+   background-color: black;
+}
+
+#calDiv table#proposedDateCalendar_table tr td.currentDate a
+{
+   background-color: #ADF;
+}
+
+.datePickerHeader
+{
+   font-weight: bold;
+   background-color: #999;
+   color: white;
+}
+
+#datesDiv
+{
+   border: 0px solid blue;
+   width: 300px;
+   height: 350px;
+   float: right;
+   margin: 0px 10px;
+   overflow: auto;
+}
+
+.savedDate
+{
+   border: 3px outset #999;
+   display: block;
+   margin: 0px;
+   margin-bottom: 4px; 
+   width: 270px;
+   padding: 0px;
+   overflow: hidden;
+}
+
+div.deleteDiv
+{
+   background-color: #FFF;
+   float: left;
+   font-weight: bold;
+   font-size: 10px;
+   font-family: times new roman;
+   text-align: center;
+   margin-right: 4px;
+}
+
+div.deleteDiv a
+{
+   color: black;
+   border: 2px outset #999;
+   display: block;
+   cursor: default;
+   padding: 2px;
+   text-decoration: none;
+   width: 12px;
+   height: 12px;
+}
+
+div.deleteDiv a:hover
+{
+   border: 2px inset #999;
+   text-decoration: none;
+}

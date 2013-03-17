@@ -1,0 +1,630 @@
+<?php
+/**
+
+Authenticator.inc (class for web pages to allow users to log in)
+
+
+**/
+require_once("lib/classes/Form.inc");
+require_once("lib/classes/Validator.inc");
+
+session_start();
+class gcLogin extends gcForm implements Application
+{
+   protected $user = "";
+   protected $pass = "";
+   protected $userID = 0;
+   public $authOK = null;
+   public $renderForm = true;
+   public $rememberQueryString = true;
+   
+   function gcLogin()
+   {
+      $this->init();
+      $this->setFormProps("title", "user", "pass", "loginButton", "backButton");
+      $this->setFormTitle("Log In");
+      $this->setInputAttr("title", "type", "heading");
+      $this->setInputAttr("title", "value", $this->getFormTitle());
+      $this->setInputAttr("user", "type", "text");
+      $this->setInputAttr("user", "size", 30);
+      $this->setInputAttr("pass", "type", "password");
+      $this->setInputAttr("pass", "size", 30);
+      $this->setInputParams("pass", "label", "Password");
+      $this->setInputAttr("loginButton", "type", "submit");
+      $this->setInputAttr("loginButton", "Value", "Log In");
+      $this->setInputAttr("backButton", "type", "back");
+      $this->setInputAttr("backButton", "Value", "Cancel");
+      $this->setControlButtons("loginButton", "backButton");
+      $this->setInputParams("user", "label", "Email");
+      $this->createValidationRules();
+      
+      if (IsSet($_SESSION['userEmail']))
+      {
+         $this->setUser($_SESSION['userEmail']);
+         $this->setAuthOK(true);
+      }
+   }
+   
+   
+   /**
+   :Function: createValidationRules()
+   
+   :Description:
+   Sets up all the validation rules this class uses to determine if submitted
+   values for user and password are valid. Checks for not empty and not too
+   long are performed on both, and the username is checked to make sure it looks
+   like an email address.
+   
+   :Parameters:
+   None
+   
+   :Return Value:
+   array - the array of validation rules this function creates.
+   
+   :Notes:
+   **/
+   function createValidationRules()
+   {
+      $rule =& $this->setValidationRule("user", "notEmpty");
+      $rule =& $this->setValidationRule("user", "maxLength", 255);
+      $rule =& $this->setValidationRule("user", "email");
+      
+      $rule =& $this->setValidationRule("pass", "notEmpty");
+      $rule->setCustomErrorMessage("Your password cannot be empty.");
+      
+      $rule =& $this->setValidationRule("pass", "maxLength", 255);
+      $rule->setCustomErrorMessage("Your password is too long.");
+      return $this->validationRules;
+   }
+   
+   
+   /**
+   :Function: setRenderForm()
+   
+   :Description:
+   Sets the renderForm flag to either true or false. If set to true, this object
+   will render the log in form for the user to log in. If false, this object
+   will print challenge headers. The default is true.
+   
+   :Parameters:
+   bool $state - The state of the flag, true or false.
+   
+   :Return Value:
+   None.
+   
+   :Notes:
+   **/
+   function setRenderForm($state)
+   {
+      $this->renderForm = $state;
+   }
+   
+   
+   /**
+   :Function: getRenderForm()
+   
+   :Description:
+   Gets the renderForm flag value to determine if this object will render the 
+   log in form for the user to log in. If false, this object  will print 
+   challenge headers. 
+   
+   :Parameters:
+   None.
+   
+   :Return Value:
+   bool - The current state of the flag, true or false.
+   
+   :Notes:
+   **/
+   function getRenderForm()
+   {
+      return $this->renderForm;
+   }
+   
+   
+   /**
+   :Function: setUser()
+   
+   :Description:
+   Sets the user name for this object. This should be an email address.
+   
+   :Parameters:
+   string $user - the user name to log in with (email address)
+   
+   :Return Value:
+   None.
+   
+   :Notes:
+   **/
+   function setUser($user)
+   {
+      if (is_string($user))
+      {
+         $cleanUser = strip_tags($user);
+         $cleanUser = stripslashes($cleanUser);
+         $this->user = $cleanUser;
+      }
+      else
+      {
+         $msg = "Tried to set auth user to a ";
+         $msg .= gettype($user);
+         $msg .= ": value is '$user'";
+         $this->msgCenter->addDebug($msg);
+         $this->user = "";
+      }
+   }
+   
+   
+   /**
+   :Function: getUser()
+   
+   :Description:
+   returns the user name to log in with (email address).
+   
+   :Parameters:
+   None.
+   
+   :Return Value:
+   string - the login name for this object.
+   
+   :Notes:
+   **/
+   function getUser()
+   {
+      return $this->user;
+   }
+   
+   
+   /**
+   :Function: setPass()
+   
+   :Description:
+   Sets the pass word for this object.
+   
+   :Parameters:
+   string $pass - the password to log in with.
+   
+   :Return Value:
+   None.
+   
+   :Notes:
+   **/
+   function setPass($pass)
+   {
+      if (is_string($pass))
+      {
+         $cleanPass = strip_tags($pass);
+         $cleanPass = stripslashes($cleanPass);
+         $this->pass = $cleanPass;
+      }
+      else
+      {
+         $msg = "Tried to set password to a ";
+         $msg .= gettype($pass);
+         $msg .= ": value is '$pass'";
+         $this->msgCenter->addDebug($msg);
+         $this->pass = "";
+      }
+   }
+   
+   
+   /**
+   :Function: getPass()
+   
+   :Description:
+   returns the password to log in with.
+   
+   :Parameters:
+   None.
+   
+   :Return Value:
+   string - the password for this object.
+   
+   :Notes:
+   **/
+   function getPass()
+   {
+      return $this->pass;
+   }
+      
+   
+   /**
+   :Function: setAuthOK()
+   
+   :Description:
+   Sets this object's authOK property to the passed in value. If authOK is
+   set to any value other than NULL, the check for the password matching the
+   db is NOT run.
+   
+   :Parameters:
+   boolean $state - the state (true or false) that you want to set the authOK
+      property to.
+   
+   :Return Value:
+   None.
+   
+   :Notes:
+   **/
+   function setAuthOK($state)
+   {
+      $this->authOK = $state;
+   }
+   
+   
+   /**
+   :Function: run()
+   
+   :Description:
+   Either logs the user in or out, depending on what was passed in via GET. If
+   a logout param is passed in GET, the user is logged out. Otherwise, the user
+   is logged in (assuming valid and correct credentials have been passed in.
+   
+   :Parameters:
+   None.
+   
+   :Return Value:
+   boolean - true at all times.
+   
+   :Notes:
+   **/
+   function run()
+   {
+      if (IsSet($_GET['logout']))
+      {
+         return $this->logOut();
+      }
+      else
+      {
+         return $this->logIn();
+      }
+   }
+   
+   
+   /**
+   :Function: logOut()
+   
+   :Description:
+   Logs the user out (duh) by calling Authenticator::clearAuth(). That method
+   unsets all of the session vars associated with auth.
+   
+   :Parameters:
+   None.
+   
+   :Return Value:
+   boolean - true at all times.
+   
+   :Notes:
+   **/
+   function logOut()
+   {
+      $this->auth->clearAuth();
+      $this->authOK = false;
+      $this->rememberQueryString = false;
+      $this->msgCenter->addAlert("You have been logged out.");
+      return true;
+   }
+   
+   
+   /**
+   :Function: logIn()
+   
+   :Description:
+   This methods tests the submitted credentials with validateCredentials() to
+   make sure that the username and password are valid values, i.e. they are not
+   too long, or empty, and that the user name is an email address. If those
+   checks are passed, then this method calls checkAuth(), which actually 
+   determines if the passed in credentials are a correct user name and password.
+   If the user/pass are not correct, or validation fails, then the challenge 
+   headers are printed.
+   
+   :Parameters:
+   None.
+   
+   :Return Value:
+   boolean - true if auth is OK, false otherwise.
+   
+   :Notes:
+   **/
+   function logIn()
+   {
+      if ($this->auth->getAuthOK())
+      {
+         return true;
+      }
+      
+      if (!$this->authOK)
+      {
+         if ($this->importCredentials())
+         {
+            if ($this->validateCredentials())
+            {
+               $loginOK = $this->checkAuth();
+               return $loginOK;
+            }
+         }
+      }
+   }
+   
+   
+   /**
+   :Function: checkAuth()
+   
+   :Description:
+   Looks up the db record for the passed in user name and password. If it finds
+   one and only one record for that user name, and the password matches,
+   this function returns true. Otherwise it returns false.
+   
+   :Parameters:
+   None. (but uses $_SERVER['PHP_AUTH_USER'] and $_SERVER['PHP_AUTH_PW']
+   
+   :Return Value:
+   Boolean - true if 1 record is found and password matches. False otherwise.
+   
+   :Notes:
+   **/
+   function checkAuth()
+   {
+      if ($this->authOK !== null)
+      {
+         return $this->authOK;
+      }
+      
+      $authOK = false;
+      if (IsSet($this->user) && IsSet($this->pass))
+      {
+         $query = $this->db->getSelectQuery(array("gcUsers", "gcPerms"));
+         $query->addColumns(array("id as userID", "email", "password"), "gcUsers");
+         $query->addColumns(array("permName", "permWeight"), "gcPerms");
+         $query->addColumn("concat(gcUsers.firstName, ' ', gcUsers.lastName) as userName", " ");
+         $query->addWhereClause("email", $this->user, "=", "gcUsers");
+         $query->addWhereClause("password", $this->pass, "=", "gcUsers");
+         $query->addInnerJoin("gcUsers.perm_id", "gcPerms.id");
+         
+         $passSearch = $this->db->runQuery($query);
+         $numRecords = $this->db->getNumRecords($passSearch);
+         if ($numRecords != 1)
+         {
+            $this->auth->clearAuth();
+            $this->msgCenter->addError("Your user name or password was not correct. Please try again.");
+            $this->auth->setUserPermWeight(GC_AUTH_ALL);
+            $authOK = false;
+         }
+         else
+         {
+            $authOK = true;
+            $userData = $this->db->getRow($passSearch);
+            $_SESSION['userEmail'] = $userData['email'];
+            $_SESSION['userID'] = $userData['userID'];
+            $_SESSION['userName'] = $userData['userName'];
+            $_SESSION['userPermWeight'] = $userData['permWeight'];
+            $this->userName = $userData['userName'];
+            $this->auth->setUserPermWeight($userData['permWeight']);
+            $this->msgCenter->addAlert("Thank you for logging in, " . $this->userName); 
+         }
+      }
+      $this->setAuthOK($authOK);
+      $this->auth->setAuthOK($authOK);
+      return $authOK;
+   }
+   
+   
+   /**
+   :Function: validateCredentials()
+   
+   :Description:
+   Tests the passed in values for user name and password and makes sure they're
+   OK. If validation fails no queries to the DB should be run.
+   
+   :Parameters:
+   None.
+   
+   :Return Value:
+   boolean - true if validation passes, false otherwise.
+   
+   :Notes:
+   **/
+   function validateCredentials()
+   {
+      if (!count($this->validationRules))
+      {
+         $this->createValidationRules();
+      }
+      
+      $validator = new gcValidator($this->validationRules);
+      $result = $validator->validate(array('user'=>$this->getUser(), 'pass'=>$this->getPass()));
+      return $result;
+   }
+   
+   
+   /**
+   :Function: importCredentials()
+   
+   :Description:
+   Looks for the credentials to login with in two places. It first checks POST,
+   to see if the user and pass have been submited. If it finds them, it calls
+   gcForm::importFromPost(), which will scrub the values before setting them.
+   If the creds aren't in POST, it looks in the $_SERVER for them in case they
+   were sent in response to a 401 error msg.
+   
+   :Parameters:
+   None.
+   
+   :Return Value:
+   boolean - true if user and pass were imported, false otherwise.
+   
+   :Notes:
+   You should call this BEFORE calling validateCredentials().
+   **/
+   function importCredentials()
+   {
+      if (IsSet($_POST['user']) && IsSet($_POST['pass']))
+      {
+         $this->importFromPost();
+      }
+      else
+      {
+         $user = htmlentities(strip_tags($_SERVER['PHP_AUTH_USER']));
+         $pass = htmlentities(strip_tags($_SERVER['PHP_AUTH_PW']));
+         $this->setUser($user);
+         $this->setPass($pass);
+      }
+      
+      if ($this->user !== "" && $this->pass != "")
+      {
+         return true;
+      }
+      else
+      {
+         return false;
+      }
+   }
+   
+   
+   
+   /**
+   :Function: printChallengeHeaders()
+   
+   :Description:
+   Sends the authentication headers to the browser.
+   
+   :Parameters:
+   None.
+   
+   :Return Value:
+   None.
+   
+   :Notes:
+   **/
+   function printChallengeHeaders()
+   {
+      header("WWW-Authenticate: Basic realm=\"" . $this->basicRealm . "\"");
+      header("HTTP/1.0 401 Unauthorized");
+      die();
+   }
+   
+   
+   /**
+   :Function: render()
+   
+   :Description:
+   
+   :Parameters:
+   None.
+   
+   :Return Value:
+   None.
+   
+   :Notes:
+   **/
+   function render()
+   {
+      if ($this->authOK)
+      {
+         //$this->htmlObjects[] =& $this->renderUID();
+      }
+      else
+      {
+         if ($this->getRenderForm())
+         {
+            $this->htmlObjects = $this->renderLoginForm();
+         }
+         else
+         {
+            $this->printChallengeHeaders();
+            die();
+         }
+      }
+      return $this->htmlObjects;
+   }
+   
+   
+   /**
+   :Function: renderLoginForm()
+   
+   :Description:
+   Returns the HTML tag object heirarchy for rendering a log in form.
+   
+   :Parameters:
+   None.
+   
+   :Return Value:
+   array - an array of gc*Tag objects to render the log in form.
+   
+   :Notes:
+   **/
+   function renderLoginForm()
+   {
+      $form =& $this->buildForm();
+      if ($this->rememberQueryString)
+      {
+         $this->form->setAttribute("action", $this->form->getAttribute("action") . "?" . $_SERVER['QUERY_STRING']);
+      }
+      return $form;
+   }
+   
+   
+   /**
+   :Function: renderUID()
+   
+   :Description:
+   
+   :Parameters:
+   None.
+   
+   :Return Value:
+   gcDivTag - a div tag containing the user name of the logged in user.
+   
+   :Notes:
+   **/
+   function &renderUID()
+   {
+      $attrs['class'] = "login";
+      $attrs['id'] = "loginID";
+      $text = $this->user;
+      $div = $this->renderer->createDivTag("Welcome $text", $attrs);
+      return $div;
+   }
+   
+   
+   /**
+   :Function: renderLoginLink()
+   
+   :Description:
+   Creates a link to the log in page. This should be displayed if the user has
+   not yet logged in. If the user has logged in, call renderUID();
+   
+   :Parameters:
+   None.
+   
+   :Return Value:
+   gcDivTag - a div tag containing a link to the login page.
+   
+   :Notes:
+   **/
+   function &renderLoginLink()
+   {
+      $attrs['class'] = "login";
+      $attrs['id'] = "loginLinkContainer";
+      $text = $this->user;
+      $link = $this->renderer->createATag("Log In", array('href'=>'/login.php'));
+      $div = $this->renderer->createDivTag($link, $attrs);
+      return $div;
+   }
+}
+
+   
+   /**
+   :Function: 
+   
+   :Description:
+   
+   :Parameters:
+   None.
+   
+   :Return Value:
+   None.
+   
+   :Notes:
+   **/
+   
+?>

@@ -1,0 +1,165 @@
+#navContainer
+{
+   background-color: transparent;
+   border: 0px solid red;
+	margin: 0px auto 0px auto;
+   padding-top: 10px;
+   width: 900px;
+   position: relative;
+   left: -26px;
+   background-color: #202020;
+   float: none;
+}
+
+#navList
+{
+	padding: 0px;
+   padding-top: 130px;
+	list-style: none;
+   border: 0px solid black;
+   font-size: 13px;
+   height: 90px;
+   background-image: url(../../images/tap/gravity_car_logo.jpg);
+   background-repeat: no-repeat;
+   background-color: #202020;
+   width: 830px;
+	margin: 0px auto;
+}
+
+#navList:after
+{
+   color: #202020;
+   content: ".";
+   display: block;
+   clear: both;
+   font-size: 0px;
+   padding: 0px;
+   margin: 0px;
+}
+
+#navList a
+{
+   font-family: verdana, sans-serif;
+   border-width: 0px;
+}
+
+#navList li.topMenuItem, #navList li.topMenuItemOver
+{
+	float: left;
+   border: 0px solid black;
+}
+
+
+#navList li#navhomeItem
+{
+   margin-left: 40px;
+}
+
+#navList li#aboutItem
+{
+   margin-left: 30px;
+}
+
+#navList li#mqtItem
+{
+   margin-left: 30px;
+}
+
+#navList li#cogItem
+{
+   margin-left: 10px;
+}
+
+#navList li#giftsItem
+{
+   margin-left: 40px;
+}
+
+#navList li#usersItem
+{
+   margin-left: 60px;
+}
+
+#navList li.topMenuItem a.topMenuLink, #navList li.topMenuItemOver a.topMenuLink
+{
+   padding: 65px 10px 2px 10px;
+	display: block;
+   text-decoration: none;
+   text-transform: uppercase;
+   background-image: url(../../images/tap/dial.gif);
+   background-repeat: no-repeat;
+   background-position: center 0px;
+}
+
+a.topMenuLink
+{
+   color: #8A7D61;
+   background-color: transparent;
+   font-weight: bold;
+}
+
+a.topMenuLink:hover
+{
+   color: white;
+   background-color: transparent;
+}
+
+#navList li.topMenuItem ul.subMenu, #navList li.topMenuItemOver ul.subMenu
+{
+	position: absolute;
+	width: 165px;
+	top: -999em;
+   z-index: 4;
+   background-image: url(../../images/tap/sub_nav_background.gif);
+   border: 3px solid #999;
+   padding: 0px;
+   margin: 0px;
+}
+
+#navList li#usersItem ul.subMenu
+{
+   width: 115px;
+}
+
+#navList li#giftsItem ul.subMenu
+{
+   width: 100px;
+}
+
+#navList li#mqtItem ul.subMenu
+{
+   width: 200px;
+}
+
+#navList li.topMenuItem:hover ul.subMenu, #navList li.topMenuItemOver ul.subMenu 
+{
+	top: auto;
+}
+
+ul.subMenu li.subMenuItem
+{
+   list-style-type: none;
+   padding: 0px;
+   margin: 0px;
+   white-space: nowrap;
+   width: 100%;
+   overflow: hidden;
+}
+
+ul.subMenu li.subMenuItem a
+{
+   padding: 2px 0px 2px 10px;
+   background-color: transparent;
+   color: #000;
+   display: block;
+   width: 100%;
+   text-decoration: none;
+}
+
+ul.subMenu li.subMenuItem a:hover
+{
+   background-color: transparent;;
+   color: #202020;
+   text-decoration: underline;
+}
+

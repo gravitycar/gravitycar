@@ -1,0 +1,439 @@
+body
+{
+   font-family: verdana, helvetica, sans-serif;
+   font-size: 13px;
+}
+
+body a
+{
+   color: blue;
+   text-decoration: none;
+}
+
+body a:hover
+{
+   color: blue;
+   text-decoration: underline;
+}
+
+body a:active
+{
+   color: blue;
+   text-decoration: none;
+}
+
+.loginDiv
+{
+   font-weight: bold; 
+   font-size: 9px; 
+   text-align: right;
+   padding: 3px;
+   border: 0px solid blue;
+}
+
+.editLink
+{
+   background-color: transparent;
+   color: black;
+   font-size: 10px;
+   margin: 0px 5px 0px 5px;
+   padding: 3px;
+}
+
+.editLink:hover
+{
+   background-color: #999;
+   color: #FFF;
+}
+
+
+#navContainer 
+{
+   border: 2px solid black;
+   background-color: #DDD;
+   float: none;
+   margin: 0px 0px 0px 0px;
+}
+
+#pageTitle
+{
+   margin: 0px;
+   margin-bottom: 10px;
+   text-align: center;
+   font-size: 22px;
+   font-weight: bold;
+}
+
+h2
+{
+   margin: 0px;
+   font-size: 18px;
+   font-weight: bold;
+}
+
+h3
+{
+   margin: 0px;
+   font-size: 14px;
+   font-weight: bold;
+}
+
+.instructions
+{
+   background-color: #EEE;
+   border: 1px solid black;
+   padding: 5px 10px;
+   margin: 10px 20%;
+}
+
+.errorMsgsDiv
+{
+   border: 0px solid black;
+   padding: 4px;
+}
+
+.errorMsgsDiv .title
+{
+   width: 400px;
+   border: 2px solid red;
+   margin: 0px;
+   padding: 2px;
+   font-size: 15px;
+   font-weight: bold;
+   background-color: red;
+   color: white;
+   text-align: center;
+}
+
+.errorMsgsDiv ul
+{
+   width: 400px;
+   padding: 2px;
+   margin: 0px;
+   list-style-type: none;
+   border: 2px solid red;
+   font-size: 12px;
+   background-color: #EEE;
+}
+
+.errorMsgsDiv ul li
+{
+   padding: 3px;
+   margin: 0px 0px 0px 5px;
+   text-align: left;
+}
+
+.debugMsgsDiv
+{
+   border: 0px solid black;
+   padding: 4px;
+}
+
+.debugMsgsDiv .title
+{
+   width: 400px;
+   border: 2px solid #F90;
+   margin: 0px;
+   padding: 2px;
+   font-size: 15px;
+   font-weight: bold;
+   background-color: #F90;
+   color: white;
+   text-align: center;
+}
+
+.debugMsgsDiv ul
+{
+   width: 400px;
+   padding: 2px;
+   margin: 0px;
+   list-style-type: none;
+   border: 2px solid #F90;
+   font-size: 12px;
+   background-color: #EEE;
+}
+
+.debugMsgsDiv ul li
+{
+   padding: 3px;
+   margin: 0px 0px 0px 5px;
+   text-align: left;
+}
+
+.alertMsgsDiv
+{
+   border: 0px solid black;
+   padding: 4px;
+}
+
+.alertMsgsDiv .title
+{
+   width: 400px;
+   border: 2px solid blue;
+   margin: 0px;
+   padding: 2px;
+   font-size: 15px;
+   font-weight: bold;
+   background-color: blue;
+   color: white;
+   text-align: center;
+}
+
+.alertMsgsDiv ul
+{
+   width: 400px;
+   padding: 2px;
+   margin: 0px;
+   list-style-type: none;
+   border: 2px solid blue;
+   font-size: 12px;
+   background-color: #EEE;
+}
+
+.alertMsgsDiv ul li
+{
+   padding: 3px;
+   margin: 0px 0px 0px 5px;
+   text-align: left;
+}
+
+table.formTable
+{
+   border: 4px ridge black;
+   margin: 3px;
+}
+
+table.formTable tr th
+{
+   color: white;
+   background-color: black;
+   font-weight: bold;
+   font-size: 12px;
+   padding: 3px;
+}
+
+table.formTable tr td
+{
+   padding: 3px;
+}
+
+.formLabel
+{
+   text-align: right;
+   font-weight: bold;
+   font-size: 11px;
+}
+
+.formErrorLabel
+{
+   text-align: right;
+   font-weight: bold;
+   font-size: 11px;
+   color: red;
+}
+
+.requiredField
+{
+   font-weight: bold;
+   color: red;
+}
+
+.footer
+{
+   margin-top: 25px;
+   text-align: center;
+   font-size: 9px;
+   clear: both;
+}
+
+.footer .left
+{
+   float: left;
+   text-align: left;
+}
+
+.footer .right
+{
+   float: right;
+   text-align: right;
+}
+
+.footer .middle
+{
+   text-align: center;
+}
+
+table.tabularData
+{
+   border: 1px solid black;
+}
+
+table.tabularData tr.dark
+{
+   color: black;
+   background-color: #EEE;
+}
+
+table.tabularData tr.light
+{
+   color: black;
+   background-color: white;
+}
+
+table.tabularData tr th
+{
+   text-align: left;
+   padding: 4px;
+   border-style: solid;
+   border-color: black;
+   border-width: 0px 0px 1px 0px;
+   background-color: black;
+   color: white;
+}
+
+table.tabularData tr td
+{
+   padding: 4px;
+}
+
+.blogEntry
+{
+   clear: both;
+   width: 80%;
+   margin: 10px auto 20px auto;
+   border: 1px solid #000;
+}
+
+.blogEntry h3
+{
+   background-color: #CCC;
+   padding: 2px 10px;
+}
+
+.blogEntry .blogEntryDate
+{
+   font-style: italic;
+   border-bottom: 1px solid #CCC;
+   margin-bottom: 8px;
+   padding: 2px 10px;
+}
+
+.blogEntry .blogEntryText
+{
+   padding: 2px 10px;
+}
+
+.blogEntry div.commentLinkContainer
+{
+   padding: 10px 10px 2px 10px;
+}
+
+#nextPrevLinks
+{
+   clear: both;
+   width: 80%;
+   margin: 10px auto 20px auto;
+   height: 2ex;
+}
+
+#prevLink
+{
+   float: left;
+}
+
+#nextLink
+{
+   text-align: right;
+}
+
+#allCommentsContainer
+{
+   clear: both;
+   width: 80%;
+   margin: 10px auto 20px auto;
+   border: 0px solid blue;
+}
+
+#allCommentsContainer .commentText
+{
+   margin: 15px 0px;
+   font-size: 12px;
+   border: 1px solid #CCC;
+   padding: 4px;
+}
+
+#allCommentsContainer .commentText .commentWriter
+{
+   font-style: italic;
+   margin-bottom: 10px;
+}
+
+#allCommentsContainer table.formTable
+{
+   margin-left: auto;
+   margin-right: auto;
+}
+
+.articleText
+{
+   padding: 0px 40px 50px 40px;
+   text-align: justify;
+}
+
+.articleText .imgLeft
+{
+   float: left;
+   margin: 0px 10px 10px 0px;
+   border: 2px solid black;
+}
+
+.articleText .imgRight
+{
+   float: right;
+   margin: 0px 0px 10px 10px;
+   border: 2px solid black;
+}
+
+.listContainer
+{
+   border: 1px solid black;
+   border-width: 1px 0px 0px 1px;
+   margin: 0px auto;
+   width: 75%;
+}
+
+a.listItemLinkLight, a.listItemLinkDark
+{
+   display: block;
+   border: 0px solid black;
+   border-width: 0px 1px 1px 0px;
+   color: black;
+   text-decoration: none;
+   padding: 4px 4px;
+   background-color: #FFF;
+   overflow: hidden;
+}
+
+a.listItemLinkDark
+{
+   background-color: #EEE;
+}
+
+a.listItemLinkLight:hover, a.listItemLinkDark:hover
+{
+   text-decoration: none;
+   color: black;
+   background-color: #FCA;
+}
+
+a.listItemLinkLight div.listTitleField, a.listItemLinkDark div.listTitleField
+{
+}
+
+a.listItemLinkLight div.listField, a.listItemLinkDark div.listField
+{
+   float: right;
+   border: 0px solid red;
+   overflow: hidden;
+   padding-left: 10px;
+}

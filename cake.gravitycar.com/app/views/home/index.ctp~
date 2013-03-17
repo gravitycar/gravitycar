@@ -1,0 +1,58 @@
+<!--
+<head>
+
+	<title>Gravitycar.com - Mike Andersen's Web Site</title>
+
+	<link href="css/default/main.css" type="text/css" rel="stylesheet" />
+
+	<link href="css/default/nav.css" type="text/css" rel="stylesheet" />
+
+	<script src="js/addOnLoad.js" type="text/javascript" lang="JavaScript"></script>
+
+	<script src="js/ieMenuFix.js" type="text/javascript" lang="JavaScript"></script>
+
+	<link href="favicon.ico" rel="Shortcut Icon" />
+
+	<link href="css/default/home.css" type="text/css" rel="stylesheet" />
+
+	<script src="js/jquery.js" type="text/javascript" lang="JavaScript"></script>
+
+	<script src="js/comment.js" type="text/javascript" lang="JavaScript"></script>
+
+	<link href="css/default/skinner.css" type="text/css" rel="stylesheet" />
+
+</head>
+-->
+
+
+<div id="homePageContents" name="homePageContents">
+<div class="articleText" id="welcome" onClick="window.location='article.php?id=1';">I&#039;m Mike Andersen, a self-taught programmer specializing in PHP, HTML, CSS and Javascript. I&#039;m currently looking for full time work doing what I love: web programming.
+<p>
+This site is a collection of apps built with my custom software that I find useful and/or entertaining. 
+</p></div>
+
+<div class="articleText" id="resume" onClick="window.location='resources/resume_2011.pdf';">You need help, that&#039;s why you&#039;re considering hiring more PHP programmers. I can help your company meet its deadlines and exceed its customers expectations. I&#039;ve done exactly that in every company I&#039;ve worked for. Check out my resume and see what I mean.</div>
+
+<div class="articleText" id="blog" onClick="window.location='blog.php';">Hello, any visiting fellow members of Tamooks! Welcome to gravitycar 3.0. I&#039;m still working on getting you all into my user database, so we can reschedule for "Tropic of Cancer". Should be soon I&#039;ll let you know as soon as the new chart is up :)
+
+<p>
+I  (click for more ...)</div>
+
+<div class="articleText" id="exhortation">Call me or <a href="mailto:mike@gravitycar.com">email me</a> to find out how I can help your company build awesome web sites!</div>
+</div>
+
+<div id="skinBackground">
+<div id="skinsContainer">
+
+<div class="skinDiv" id="skinCount">3</div>
+
+<div class="skinDiv" id="gears"><a href="/index.php?cssPath=gears" class="skinLink"><img border="0" src="images/default/skinFrame.gif" height="103" width="150" style="background-image: url(images/skins/gears.png);" /></a></div>
+
+<div class="skinDiv" id="tap"><a href="/index.php?cssPath=tap" class="skinLink"><img border="0" src="images/default/skinFrame.gif" height="103" width="150" style="background-image: url(images/skins/tap.png);" /></a></div>
+
+<div class="skinDiv" id="tokyo"><a href="/index.php?cssPath=tokyo" class="skinLink"><img border="0" src="images/default/skinFrame.gif" height="103" width="150" style="background-image: url(images/skins/tokyo.png);" /></a></div>
+</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,57 @@
+-- MySQL dump 10.13  Distrib 5.1.37, for debian-linux-gnu (i486)
+--
+-- Host: localhost    Database: gravitycar
+-- ------------------------------------------------------
+-- Server version	5.1.37-1ubuntu5.1
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `gcUsers`
+--
+
+DROP TABLE IF EXISTS `gcUsers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `gcUsers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `firstName` tinytext,
+  `middleName` tinytext,
+  `lastName` tinytext,
+  `email` tinytext,
+  `phone` varchar(13) DEFAULT NULL,
+  `password` varchar(42) DEFAULT NULL,
+  `perm_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=82 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `gcUsers`
+--
+
+LOCK TABLES `gcUsers` WRITE;
+/*!40000 ALTER TABLE `gcUsers` DISABLE KEYS */;
+INSERT INTO `gcUsers` (`id`, `firstName`, `middleName`, `lastName`, `email`, `phone`, `password`, `perm_id`) VALUES (1,'Mike','Joseph','Andersen','mike@gravitycar.com','408-264-4044','*AAA95060424890C95340693BD982F60B7BC85AE9',3),(6,'Emily','Ann','FitzGerald','emily@gravitycar.com','408-264-4044','*AAA95060424890C95340693BD982F60B7BC85AE9',2),(18,'Evan','Kareem','Dodge','hexboy@gmail.com','','*AAA95060424890C95340693BD982F60B7BC85AE9',2),(19,'Becky','Anne','Andersen','mom@gravitycar.com','','*AAA95060424890C95340693BD982F60B7BC85AE9',2),(17,'Jen','Eloise','Dodge','jen.dodge@gmail.com','','*8E99DBA8FB6D101FC40F0FD4FC44CBDA83D7600D',2),(41,'Guest','','User','guest@gravitycar.com',NULL,'*34DB3FAEDA033A14995DA7975292C701CB6FA6BA',2),(44,'Mike','','Baxter','mike@tamcom.com',NULL,'*C65EBCE44E40717B446AFE3BDD9CCFEE5BCD7BE6',NULL),(42,'Guest','','Admin','guest_admin@gravitycar.com',NULL,'*EFCD68AE6890B81C72567E146241838B9734BEE1',3),(43,'Captian','','Hammer','thehammer@gravitycar.com',NULL,'*AAA95060424890C95340693BD982F60B7BC85AE9',2),(45,'Tom','','Bentz','tom@tamcom.com',NULL,'*C65EBCE44E40717B446AFE3BDD9CCFEE5BCD7BE6',NULL),(46,'Sean','','Cohelan','sean@tamcom.com',NULL,'*FC69E042CE30D92E2952335F690CF2345C812E36',2),(47,'Iris','','Weaver','irisweaver@gmail.com',NULL,'*8589BD39EA3A7A9F226825BF8D364BB2184AE91E',2),(48,'Lisa','','Adams','lisa@lisaadams.com',NULL,'*8589BD39EA3A7A9F226825BF8D364BB2184AE91E',2),(49,'Amy','','Whitehead','amy_whitehead@yahoo.com',NULL,'*59BF6E7453A98A5D759AC9D14DF74857A585EECC',2),(50,'Laura','','Cohelan','laura.cohelan@pictos.com',NULL,'*8589BD39EA3A7A9F226825BF8D364BB2184AE91E',2),(51,'Erin','','Lee','ehlee1@yahoo.com',NULL,'*82466BE082EBAC21A32FA0378D5C220EDE7939B8',2),(52,'Mark','','Spencer','mjs@catalyticaenergy.com',NULL,'*34DB3FAEDA033A14995DA7975292C701CB6FA6BA',2),(53,'Mary','','Bacca','mbacca@harveyecology.com',NULL,'*34DB3FAEDA033A14995DA7975292C701CB6FA6BA',2),(54,'David','','Van Lennep','dvanlennep@cruzio.com',NULL,'*34DB3FAEDA033A14995DA7975292C701CB6FA6BA',2),(55,'James','','Jones','jjones@ebmud.com',NULL,'*34DB3FAEDA033A14995DA7975292C701CB6FA6BA',2),(56,'John','','Wallace','swimstacey@iqmail.net',NULL,'*34DB3FAEDA033A14995DA7975292C701CB6FA6BA',2),(57,'Laure','','Zmurk','zmurks@AOL.COM',NULL,'*34DB3FAEDA033A14995DA7975292C701CB6FA6BA',2),(58,'Jeff','','Swindle','yokie00@yahoo.com',NULL,'*34DB3FAEDA033A14995DA7975292C701CB6FA6BA',2),(59,'Mary','','Grunthaner','MJGTCHR@aol.com',NULL,'*34DB3FAEDA033A14995DA7975292C701CB6FA6BA',2),(60,'Stacey','','Wallace','swimstacey@iqmail.net',NULL,'*C9F50B92932B22E5E2890402674C5EE1CD178FC2',2),(61,'Greg','','Zmurk','zmurks@AOL.COM',NULL,'*34DB3FAEDA033A14995DA7975292C701CB6FA6BA',2),(62,'Michele ','','Van Lennep','dvanlennep@cruzio.com ',NULL,'*34DB3FAEDA033A14995DA7975292C701CB6FA6BA',2),(63,'Melanie','','Jones','',NULL,'*34DB3FAEDA033A14995DA7975292C701CB6FA6BA',2),(64,'Kandee','','Swindle','',NULL,'*34DB3FAEDA033A14995DA7975292C701CB6FA6BA',2),(65,'Tifin','','Kutch','lifeadventurecoaching@yahoo.com',NULL,'*8589BD39EA3A7A9F226825BF8D364BB2184AE91E',2),(67,'Jen','','van Stelle','jvanstel@hotmail.com',NULL,'*34DB3FAEDA033A14995DA7975292C701CB6FA6BA',2),(68,'Demo','','Guest','mike@gravitycar.com',NULL,'*34DB3FAEDA033A14995DA7975292C701CB6FA6BA',2),(69,'Kate & Rich','','Waldo','',NULL,'*C9F50B92932B22E5E2890402674C5EE1CD178FC2',2),(70,'Penni','','Siemens',' ',NULL,'*8589BD39EA3A7A9F226825BF8D364BB2184AE91E',2),(71,'Kelly','','Armitage','karmitage@hughes.net',NULL,'*8589BD39EA3A7A9F226825BF8D364BB2184AE91E',2),(72,'Tracey','','Weiss','',NULL,'*8589BD39EA3A7A9F226825BF8D364BB2184AE91E',2),(73,'DiAnna','','VanEycke','dmvaneycke@yahoo.com',NULL,'*1954E967167F8CB5E2F48BC502CE017F2B2A443B',2),(74,'Hannah','','Balcomb','bananabigfoot@yahoo.com',NULL,'*28FB1A0E9B78BB02B9D18F1EC399943DB6DCE86E',2),(75,'Melissa','','Swanson','melissa366@stompit.net',NULL,'*8589BD39EA3A7A9F226825BF8D364BB2184AE91E',2),(76,'Penny','','Cotter','SHELSEA@EARTHLINK.NET',NULL,'*8589BD39EA3A7A9F226825BF8D364BB2184AE91E',2),(77,'Shannon','','Oberst','shannon12272003@yahoo.com',NULL,'*8589BD39EA3A7A9F226825BF8D364BB2184AE91E',2),(78,'Steve & Laura','','Volk','',NULL,'*C9F50B92932B22E5E2890402674C5EE1CD178FC2',2),(79,'Jessica','','Swensen','jesika007@hotmail.com',NULL,'*8589BD39EA3A7A9F226825BF8D364BB2184AE91E',2),(81,'Ginger','','O&#039;Kelley&#039;','originalspice@hotmail.com',NULL,'*8589BD39EA3A7A9F226825BF8D364BB2184AE91E',2);
+/*!40000 ALTER TABLE `gcUsers` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2010-04-22 15:21:26

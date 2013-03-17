@@ -1,0 +1,89 @@
+#skinBackground
+{
+   width: 900px;
+   padding: 0px 0px;
+	margin: 0px auto;
+   background-color: #202020;
+   overflow: hidden;
+   border: 0px solid red;
+   size: 0px
+   color: #202020;
+   position: relative;
+   left: -26px;
+   top: -340px;
+   background-color: transparent;
+   /*
+   position: relative;
+   top: -340px;
+   left: -18%;
+   */
+}
+
+#skinsContainer
+{
+   width: 380px;
+   height: 300px;
+   float: right;
+   background-image: url(../../images/tap/latest.gif);
+   background-repeat: no-repeat;
+   padding-right: 30px;
+}
+
+.skinDiv
+{
+   margin: 40px 0px 0px 10px;
+   float: left;
+   background-color: transparent;
+   border: 3px solid #DA9113;
+   height: 103px;
+}
+
+.skinDiv:after
+{
+   content: ".";
+   color: #202020;
+   display: block;
+   font-size: 0px;
+   padding: 0px;
+   visibility: hidden;
+}
+
+.skinLink
+{
+   font-size: 0px;
+   height: 0px;
+   display: block;
+}
+
+#skinCount
+{
+   height: 0px;
+   margin: 0px;
+   font-size: 0px;
+   background-color: transparent;
+   border: 0px solid #202020;
+   visibility: hidden;
+}
+
+div#gears
+{
+   -webkit-transform: rotate(5deg);
+   -moz-transform: rotate(5deg);
+}
+
+div#tokyo
+{
+   float: right;
+   margin-right: 20px;
+   -webkit-transform: rotate(345deg);
+   -moz-transform: rotate(345deg);
+}
+
+div#tap
+{
+   position: relative;
+   left: 75px;
+   top: -75px;
+   z-index: 2;
+}
+
